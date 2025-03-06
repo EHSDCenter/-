@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartIoT - Innovative Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+        }
+
+        .navbar {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.9);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00ff88;
+        }
+
+        .menu-icon {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1950') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: fadeUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin-bottom: 30px;
+            animation: fadeUp 1s 0.2s ease backwards;
+        }
+
+        .cta-button {
+            padding: 15px 40px;
+            background: #00ff88;
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: fadeUp 1s 0.4s ease backwards;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        .projects-section {
+            padding: 100px 50px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .project-card {
+            background: #1a1a1a;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-image {
+            height: 200px;
+            background: #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-info h3 {
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+
+        .sub-parts {
+            position: absolute;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.9), rgba(0, 200, 255, 0.9));
+            padding: 20px;
+            transition: right 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card:hover .sub-parts {
+            right: 0;
+        }
+
+        .sub-part {
+            color: #fff;
+            font-size: 1em;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: background 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sub-part:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px);
+        }
+
+        .sub-part i {
+            font-size: 1.2em;
+            color: #121b16;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 20px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                gap: 10px;
+                position: absolute;
+                top: 70px;
+                right: 20px;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            .projects-section {
+                padding: 50px 20px;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .project-image {
+                height: 150px;
+            }
+
+            .project-info h3 {
+                font-size: 1.2em;
+            }
+
+            .project-info p {
+                font-size: 0.9em;
+            }
+
+            .sub-parts {
+                width: 250px;
+                right: -250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 0.9em;
+            }
+
+            .cta-button {
+                padding: 10px 30px;
+                font-size: 1em;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sub-parts {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">NU EHSD</div>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1>IoT Solutions</h1>
+        <p>Transforming the future with innovative connected devices and smart systems</p>
+        <button class="cta-button"><a href="#projects">Explore More</a></button>
+    </section>
+
+    <section class="projects-section" id="projects">
+        <h2>Featured IOT Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Energy management system.webp" alt="Energy Management">
+                </div>
+                <div class="project-info">
+                    <h3>Energy Management System</h3>
+                    <p>Complete home automation system with AI-powered energy management</p>
+                </div>
+                <div class="sub-parts">
+                    <div class="sub-part">
+                        <i class="fas fa-bolt"></i>
+                        DC Power Monitoring
+                    </div>
+                    <div class="sub-part">
+                        <i class="fas fa-plug"></i>
+                        AC Power Monitoring
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Smart Water Management.jpg" alt="Water">
+                </div>
+                <div class="project-info">
+                    <h3>Water Management System</h3>
+                    <p>Real-time patient monitoring system with emergency alerts</p>
+                </div>
+                <div class="sub-parts">
+                    <div class="sub-part">
+                        <i class="fas fa-tint"></i>
+                        pH Level Monitoring
+                    </div>
+                    <div class="sub-part">
+                        <i class="fas fa-water"></i>
+                        TDS Level Monitoring
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6" alt="Agriculture">
+                </div>
+                <div class="project-info">
+                    <h3>Environment Monitoring System</h3>
+                    <p>Environment Safety Projects</p>
+                </div>
+                <div class="sub-parts">
+                    <div class="sub-part">
+                        <i class="fa-solid fa-smog"></i>
+                        Air Pollution Managment
+                    </div>
+                    <div class="sub-part">
+                        <i class="fa-solid fa-wind"></i>
+                        Harmful Gas Monitoring System
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="soil.jpg" alt="Soil">
+                </div>
+                <div class="project-info">
+                    <h3>Soil Management System</h3>
+                    <p>Enahancing the soil quality by iot</p>
+                </div>
+                <div class="sub-parts">
+                    <div class="sub-part">
+                        <i class="fa-solid fa-seedling"></i>
+                        Soil Precision Agriculture
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="BMS.jpg" alt="Battery">
+                </div>
+                <div class="project-info">
+                    <h3>Battery Management System</h3>
+                    <p>Automated irrigation and crop monitoring system</p>
+                </div>
+                <div class="sub-parts">
+                    <div class="sub-part">
+                        <i class="fas fa-battery-full"></i>
+                        Battery Health Monitoring
+                    </div>
+                    <div class="sub-part">
+                        <i class="fas fa-charging-station"></i>
+                        Charging Status
+                    </div>
+                    <div class="sub-part">
+                        <i class="fas fa-car-side "></i>
+                        EV vehicles
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Toggle mobile menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add scroll animation for project cards
+        window.addEventListener('scroll', () => {
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if (cardTop < window.innerHeight - 100) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

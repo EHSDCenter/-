@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Energy Harvesting System | Future of Sustainable Energy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Modern CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Custom Properties */
+        :root {
+            --primary-color: #00ff88;
+            --secondary-color: #006d3b;
+            --dark-bg: #0a192f;
+            --text-light: #ccd6f6;
+            --neon-glow: 0 0 15px var(--primary-color);
+        }
+        .navbar {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.9);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00ff88;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(45deg, rgba(0,39,20,0.9) 0%, rgba(0,99,50,0.7) 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: var(--neon-glow);
+            background: linear-gradient(45deg, var(--primary-color), #00ffbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            text-shadow: var(--neon-glow);
+        }
+
+        .typing-animation {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            text-shadow: var(--neon-glow);
+            margin-top: 1rem;
+        }
+
+        .typed-text {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            margin-left: 4px;
+            background: var(--primary-color);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Section Common Styles */
+        .section {
+            padding: 8rem 2rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 25, 47, 0.8);
+            border-radius: 20px;
+            margin: 4rem auto;
+            max-width: 1200px;
+            box-shadow: 0 0 30px rgba(0,255,136,0.1);
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 1rem;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+            box-shadow: var(--neon-glow);
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0,255,136,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0,255,136,0.2), transparent);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+            z-index: 0;
+        }
+
+        .feature-card:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .feature-card * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Video Gallery */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .video-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            aspect-ratio: 16/9;
+        }
+
+        .video-card:hover {
+            transform: scale(1.05);
+        }
+
+        .video-card iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        .footer-distributed {
+            background-color: #1f1f1f;
+            color: #f1f1f1;
+            padding: 40px 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            border-top: 1px solid #ff9800;
+            font-size: 1rem;
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        .footer-distributed::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%231f1f1f" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>') no-repeat;
+            background-size: cover;
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1440px; }
+        }
+
+        .footer-left img {
+            width: 60px;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .footer-left img:hover {
+            transform: scale(1.2);
+        }
+
+        .footer-links a {
+            color: #f1f1f1;
+            margin-right: 20px;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
+        }
+
+        .footer-links a:hover {
+            color: #ff9800;
+            border-bottom: 2px solid #ff9800;
+        }
+
+        .footer-center i {
+            margin-right: 12px;
+            color: #ff9800;
+            font-size: 22px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .footer-center i:hover {
+            transform: scale(1.3);
+        }
+
+        .footer-icons a {
+            color: #f1f1f1;
+            margin-right: 15px;
+            font-size: 28px;
+            display: inline-block;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .footer-icons a:hover {
+            color: #ff9800;
+            transform: rotate(10deg) scale(1.3);
+            box-shadow: 0 0 15px rgba(255, 152, 0, 0.7);
+        }
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0,255,136,0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+        }
+
+        #back-to-top:hover {
+            transform: scale(1.1);
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            border: 5px solid var(--primary-color);
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+                margin: 2rem;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .footer-distributed {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-left,
+            .footer-center,
+            .footer-right {
+                margin: 20px 0;
+            }
+
+            .footer-links {
+                margin-bottom: 30px;
+            }
+
+            .footer-icons a {
+                margin: 10px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+    <div id="particles-js"></div>
+    <nav class="navbar">
+        <div class="logo"><b>EHSD</b></div>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Human Energy Harvesting System</h1>
+            <p class="tagline">Transforming Human Movement into Clean Energy</p>
+            <p class="typing-animation">Innovating for a <span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+        </div>
+    </section>
+
+    <section class="section" id="introduction">
+        <h2>Revolutionary Energy Solution</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-shoe-prints feature-icon"></i>
+                <h3>Smart Footwear Technology</h3>
+                <p>Advanced piezoelectric insoles converting every step into usable electricity with 85% efficiency.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-solar-panel feature-icon"></i>
+                <h3>Hybrid Energy System</h3>
+                <p>Combining kinetic, solar, and thermal energy harvesting in one integrated solution.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-battery-full feature-icon"></i>
+                <h3>Energy Storage</h3>
+                <p>Total accumulation of combined energy stored in a battery for future use.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-tachometer-alt feature-icon"></i>
+                <h3>Real-Time Data</h3>
+                <p>Display real-time energy generation and usage to track energy production.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer-distributed">
+        <div class="footer-left">
+            <img src="NUlogo.png" alt="NU EHSD Logo" />
+            <p class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="Our Team.html">Our Team</a>
+                <a href="Project.html">Projects</a>
+                <a href="news.html">News and Event</a>
+                <a href="publications.html">Publications</a>
+            </p>
+            <p>&copy; 2024 EHSD Research Centre. All rights reserved.</p>
+        </div>
+
+        <div class="footer-center">
+            <div>
+                <a href="https://maps.app.goo.gl/XDHGesiEC6ZJJCjD9"><i class="fa fa-map-marker"></i></a>
+                <p><span>NIIT University</span> Neemrana, Rajasthan</p>
+            </div>
+            <p><i class="fas fa-envelope"></i> <a href="ajay.singh@niit university.in">ajay.singh@niit university.in</a></p>
+            <p><a href="jetendra.joshi@niit university.in">jetendra.joshi@niit university.in</a></p>
+            <p><i class="fas fa-phone"></i> +91 74080 07111</p>
+        </div>
+
+        <div class="footer-right">
+
+            <div class="footer-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <button id="back-to-top" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js initialization
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80 },
+                color: { value: '#00ff88' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5 },
+                size: { value: 3 },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        // Typing Animation
+        const typedTextSpan = document.querySelector(".typed-text");
+        const cursorSpan = document.querySelector(".cursor");
+
+        const textArray = ["Sustainable Future", "Greener Planet", "Clean Energy"];
+        const typingDelay = 200;
+        const erasingDelay = 100;
+        const newTextDelay = 2000;
+        let textArrayIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < textArray[textArrayIndex].length) {
+                if (!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typingDelay);
+            } else {
+                cursorSpan.classList.remove("typing");
+                setTimeout(erase, newTextDelay);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(erase, erasingDelay);
+            } else {
+                textArrayIndex++;
+                if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+                setTimeout(type, typingDelay + 1100);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (textArray.length) setTimeout(type, newTextDelay + 250);
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById("back-to-top");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add("visible");
+            } else {
+                backToTopButton.classList.remove("visible");
+            }
+        });
+
+        backToTopButton.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        // Loading Screen
+        window.addEventListener("load", () => {
+            const loadingScreen = document.getElementById("loading-screen");
+            loadingScreen.style.opacity = "0";
+            setTimeout(() => {
+                loadingScreen.style.display = "none";
+            }, 500);
+        });
+    </script>
+</body>
+</html>
