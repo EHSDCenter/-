@@ -201,7 +201,7 @@
             margin: 60px auto;
             overflow: hidden;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .slider-images {
@@ -210,9 +210,8 @@
             height: 600px;
         }
 
-        /* Target both images and video elements */
-        .slider-images img, 
-        .slider-images video, 
+        .slider-images img,
+        .slider-images video,
         .slider-images iframe {
             width: 100%;
             height: 100%;
@@ -221,6 +220,13 @@
             border-radius: 15px;
         }
 
+        /* Initially disable pointer events on videos and iframes; they will be enabled for the active slide via JavaScript */
+        .slider-images video,
+        .slider-images iframe {
+            pointer-events: none;
+        }
+
+        /* Navigation Buttons */
         .slider-button {
             position: absolute;
             top: 50%;
@@ -241,17 +247,50 @@
             background-color: rgba(0, 0, 0, 0.9);
             transform: translateY(-50%) scale(1.1);
         }
-        /* Previous button CSS */
+
         .prev {
             left: 30px;
-            content: '❮'; /* Left arrow symbol */
         }
 
-        /* Next button CSS */
         .next {
             right: 30px;
-            content: '❯'; /* Right arrow symbol */
         }
+
+        .slider-button::before {
+            font-size: 28px;
+        }
+
+        .prev::before {
+            content: '❮';
+        }
+
+        .next::before {
+            content: '❯';
+        }
+
+        /* Indicators */
+        .slider-indicators {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: white;
+        }
+
 
         /* Video controls styling */
         video {
@@ -582,41 +621,44 @@
 
 
     <script>
-
         let currentSlide = 0;
-        let autoSlideInterval;
         const slider = document.querySelector('.slider');
         const track = document.querySelector('.slider-images');
         const slides = document.querySelectorAll('.slider-images > *');
         const indicatorsContainer = document.querySelector('.slider-indicators');
         const totalSlides = slides.length;
 
-        // Create indicators
-        slides.forEach((_, index) => {
+        // Create indicators for each slide
+        slides.forEach((slide, index) => {
             const indicator = document.createElement('div');
             indicator.classList.add('indicator');
-            if(index === 0) indicator.classList.add('active');
+            if (index === 0) indicator.classList.add('active');
             indicator.addEventListener('click', () => {
                 goToSlide(index);
-                resetAutoSlide();
             });
             indicatorsContainer.appendChild(indicator);
         });
 
         function updateSlider() {
+            // Update slider position and indicator state
             track.style.transform = `translateX(-${currentSlide * 100}%)`;
             document.querySelectorAll('.indicator').forEach((indicator, index) => {
                 indicator.classList.toggle('active', index === currentSlide);
             });
-            
-            // Handle video playback
+
+            // Manage video playback and pointer events
             slides.forEach((slide, index) => {
-                if(slide.tagName === 'VIDEO') {
-                    if(index === currentSlide) {
-                        slide.play();
+                if (slide.tagName === 'VIDEO') {
+                    if (index === currentSlide) {
+                        if (slide.paused) slide.play();
+                        slide.style.pointerEvents = "auto";
                     } else {
-                        slide.pause();
+                        if (!slide.paused) slide.pause();
+                        slide.style.pointerEvents = "none";
                     }
+                }
+                if (slide.tagName === 'IFRAME') {
+                    slide.style.pointerEvents = (index === currentSlide) ? "auto" : "none";
                 }
             });
         }
@@ -636,30 +678,10 @@
             updateSlider();
         }
 
-        function resetAutoSlide() {
-            clearInterval(autoSlideInterval);
-            autoSlideInterval = setInterval(nextSlide, 10000);
-        }
+        // Manual navigation event listeners
+        document.querySelector('.next').addEventListener('click', nextSlide);
+        document.querySelector('.prev').addEventListener('click', prevSlide);
 
-        document.querySelector('.next').addEventListener('click', () => {
-            nextSlide();
-            resetAutoSlide();
-        });
-
-        document.querySelector('.prev').addEventListener('click', () => {
-            prevSlide();
-            resetAutoSlide();
-        });
-
-        // Start auto-slide
-        autoSlideInterval = setInterval(nextSlide, 10000);
-
-        // Pause video when not visible
-        track.addEventListener('transitionstart', () => {
-            slides.forEach(slide => {
-                if(slide.tagName === 'VIDEO') slide.pause();
-            });
-        });
 </script>
 </body>
 </html>
