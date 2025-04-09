@@ -210,20 +210,33 @@
             height: 600px;
         }
 
+        /* Basic styling for all slides */
         .slider-images img,
         .slider-images video,
-        .slider-images iframe {
+        .slider-images iframe,
+        .slider-images .slide-with-label {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: fill;
             flex-shrink: 0;
             border-radius: 15px;
+            position: relative;
         }
 
-        /* Initially disable pointer events on videos and iframes; they will be enabled for the active slide via JavaScript */
+        /* Wrapped label slides */
+        .slide-with-label {
+            position: relative;
+        }
+
+        /* Ensure embedded videos and iframe aren't interactive unless active */
         .slider-images video,
         .slider-images iframe {
             pointer-events: none;
+        }
+
+        .slider-images .active video,
+        .slider-images .active iframe {
+            pointer-events: auto;
         }
 
         /* Navigation Buttons */
@@ -291,11 +304,26 @@
             background-color: white;
         }
 
+        /* Label styling on video */
+        .slide-label {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 18px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 10px;
+            pointer-events: none;
+        }
 
-        /* Video controls styling */
-        video {
+        /* Optional: adjust object-fit and alignment */
+        video,
+        iframe {
             object-position: center;
         }
+
         .footer-distributed {
             background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
             color: #ffffff;
@@ -556,7 +584,7 @@
                     </li>
                     <li class="glassmorphism">
                         <a href="Renewable energy.html">
-                            <img src="Herbal.jpg" alt="Renewable Energy">
+                            <img src="2.png" alt="Renewable Energy">
                         </a>
                     </li>
                 </ul>
@@ -568,9 +596,41 @@
                 <img src="1.png" alt="Slide 1">
                 <img src="2.png" alt="Slide 2">
                 <img src="3.png" alt="Slide 3">
-                <iframe src="https://www.youtube.com/embed/2WzLugX1uNU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-                </iframe>
+                
+                <iframe class="slide-frame" src="https://www.youtube.com/embed/2WzLugX1uNU" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                
+                <div class="slide-with-label">
+                    <video src="TV Remote.mp4" ></video>
+                    <div class="slide-label">Applications Of Herbal Battery</div>
+                </div>
+        
+                <div class="slide-with-label">
+                    <video src="Projector Remote.mp4" ></video>
+                    <div class="slide-label">Applications Of Herbal Battery</div>
+                </div>
+        
+                <div class="slide-with-label">
+                    <video src="Clock.MOV"></video>
+                    <div class="slide-label">Application of Herbal Battery</div>
+                </div>
+        
+                <div class="slide-with-label">
+                    <video src="Pots Battery.mp4"></video>
+                    <div class="slide-label">Testing of Herbal Battery</div>
+                </div>
+        
+                <div class="slide-with-label">
+                    <video src="Battery-1.mp4"></video>
+                    <div class="slide-label">Testing of herbal battery</div>
+                </div>
+        
+                <div class="slide-with-label">
+                    <video src="AA battery.mp4" ></video>
+                    <div class="slide-label">Testing of herbal battery</div>
+                </div>
             </div>
+        
             <button class="slider-button prev">&#10094;</button>
             <button class="slider-button next">&#10095;</button>
             <div class="slider-indicators"></div>
@@ -620,68 +680,71 @@
         </footer>
 
 
-    <script>
-        let currentSlide = 0;
-        const slider = document.querySelector('.slider');
-        const track = document.querySelector('.slider-images');
-        const slides = document.querySelectorAll('.slider-images > *');
-        const indicatorsContainer = document.querySelector('.slider-indicators');
-        const totalSlides = slides.length;
-
-        // Create indicators for each slide
-        slides.forEach((slide, index) => {
-            const indicator = document.createElement('div');
-            indicator.classList.add('indicator');
-            if (index === 0) indicator.classList.add('active');
-            indicator.addEventListener('click', () => {
-                goToSlide(index);
-            });
-            indicatorsContainer.appendChild(indicator);
-        });
-
-        function updateSlider() {
-            // Update slider position and indicator state
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-            document.querySelectorAll('.indicator').forEach((indicator, index) => {
-                indicator.classList.toggle('active', index === currentSlide);
-            });
-
-            // Manage video playback and pointer events
-            slides.forEach((slide, index) => {
-                if (slide.tagName === 'VIDEO') {
-                    if (index === currentSlide) {
-                        if (slide.paused) slide.play();
-                        slide.style.pointerEvents = "auto";
-                    } else {
-                        if (!slide.paused) slide.pause();
-                        slide.style.pointerEvents = "none";
+        <script>
+            const sliderImages = document.querySelector('.slider-images');
+            const slides = Array.from(sliderImages.children);
+            const prevButton = document.querySelector('.prev');
+            const nextButton = document.querySelector('.next');
+            const indicatorsContainer = document.querySelector('.slider-indicators');
+            let currentSlide = 0;
+        
+            function updateSlider() {
+                sliderImages.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+                // Pause all videos
+                slides.forEach((slide, index) => {
+                    const video = slide.querySelector('video');
+                    if (video) {
+                        if (index === currentSlide) {
+                            video.play();
+                        } else {
+                            video.pause();
+                            video.currentTime = 0;
+                        }
                     }
-                }
-                if (slide.tagName === 'IFRAME') {
-                    slide.style.pointerEvents = (index === currentSlide) ? "auto" : "none";
-                }
+        
+                    // Handle iframe (like YouTube)
+                    const iframe = slide.querySelector('iframe');
+                    if (iframe) {
+                        const src = iframe.getAttribute('src');
+                        if (index === currentSlide) {
+                            iframe.src = src; // Reload to allow playing
+                        } else {
+                            iframe.src = ''; // Remove to stop playback
+                        }
+                    }
+                });
+        
+                // Update indicators
+                document.querySelectorAll('.indicator').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+        
+            // Create indicators
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.classList.add('indicator');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    currentSlide = i;
+                    updateSlider();
+                });
+                indicatorsContainer.appendChild(dot);
             });
-        }
-
-        function goToSlide(index) {
-            currentSlide = (index + totalSlides) % totalSlides;
-            updateSlider();
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateSlider();
-        }
-
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            updateSlider();
-        }
-
-        // Manual navigation event listeners
-        document.querySelector('.next').addEventListener('click', nextSlide);
-        document.querySelector('.prev').addEventListener('click', prevSlide);
-
-</script>
+        
+            prevButton.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateSlider();
+            });
+        
+            nextButton.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlider();
+            });
+        
+            updateSlider(); // Initialize
+        </script>
+        
 </body>
 </html>
